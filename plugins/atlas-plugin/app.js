@@ -12,7 +12,7 @@ const dictionaries = {
     imported: "Iconset {set} mit {count} Icons importiert.", loadFailed: "Iconset konnte nicht geladen werden: {message}",
     noIcons: "Keine Icons gefunden.", selectedSet: "AUSGEWÄHLTES ICONSET", fileTooLarge: "Die Datei ist größer als 64 MiB.",
     invalidFile: "Diese Datei enthält kein unterstütztes Iconset.", replaceSet: "Das Iconset {set} ist bereits vorhanden. Soll es ersetzt werden?",
-    apiNote: "Home Assistant listet benutzerdefinierte Iconsets nicht automatisch. Sichtbar sind MDI, einlesbare Icon Studio-Sets und Sets, die eine Iconliste bereitstellen.",
+    apiNote: "Home Assistant listet benutzerdefinierte Iconsets nicht automatisch. Sichtbar sind MDI, einlesbare Icon-Studio- und statische Community-Sets sowie Sets, die eine Iconliste bereitstellen.",
   },
   en: {
     eyebrow: "ATLAS PLUGIN", title: "ATLAS Icon Library", intro: "Browse icon sets and copy icons for Home Assistant.",
@@ -25,7 +25,7 @@ const dictionaries = {
     imported: "Imported icon set {set} with {count} icons.", loadFailed: "Could not load icon set: {message}",
     noIcons: "No icons found.", selectedSet: "SELECTED ICON SET", fileTooLarge: "The file exceeds 64 MiB.",
     invalidFile: "This file does not contain a supported icon set.", replaceSet: "Icon set {set} already exists. Replace it?",
-    apiNote: "Home Assistant does not automatically list custom icon sets. Available sets include MDI, importable Icon Studio sets and sets that provide an icon list.",
+    apiNote: "Home Assistant does not automatically list custom icon sets. Available sets include MDI, importable Icon Studio and static community sets, plus sets that provide an icon list.",
   },
   fr: {
     eyebrow: "PLUGIN ATLAS", title: "Bibliothèque d’icônes ATLAS", intro: "Parcourez les jeux d’icônes et copiez des icônes pour Home Assistant.",
@@ -38,7 +38,7 @@ const dictionaries = {
     imported: "Jeu d’icônes {set} importé avec {count} icônes.", loadFailed: "Impossible de charger le jeu d’icônes : {message}",
     noIcons: "Aucune icône trouvée.", selectedSet: "JEU D’ICÔNES SÉLECTIONNÉ", fileTooLarge: "Le fichier dépasse 64 Mio.",
     invalidFile: "Ce fichier ne contient pas de jeu d’icônes compatible.", replaceSet: "Le jeu d’icônes {set} existe déjà. Le remplacer ?",
-    apiNote: "Home Assistant ne fournit pas de liste automatique des jeux d’icônes personnalisés. Les jeux disponibles sont MDI, les jeux Icon Studio importables et ceux qui fournissent une liste d’icônes.",
+    apiNote: "Home Assistant ne fournit pas de liste automatique des jeux d’icônes personnalisés. Les jeux disponibles incluent MDI, les jeux Icon Studio et les jeux communautaires statiques importables, ainsi que ceux qui fournissent une liste d’icônes.",
   },
 };
 
