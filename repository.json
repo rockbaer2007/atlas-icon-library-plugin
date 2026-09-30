@@ -22,7 +22,7 @@
         "en": "ATLAS Icon Library",
         "fr": "Bibliothèque d’icônes ATLAS"
       },
-      "version": "0.1.6",
+      "version": "0.1.7",
       "description": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
       "descriptionI18n": {
         "de": "Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.",

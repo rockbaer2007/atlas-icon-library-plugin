@@ -1,5 +1,5 @@
 :root {
-  color-scheme: dark light;
+  color-scheme: light dark;
   font: 15px/1.45 system-ui, sans-serif;
   color: var(--primary-text-color, #e8eef5);
   background: var(--primary-background-color, #101820);
@@ -8,6 +8,19 @@
   --line: var(--divider-color, #34444c);
   --accent: var(--accent-color, #29cdbb);
   --muted: var(--secondary-text-color, #aebdc5);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    color: var(--primary-text-color, #202b33);
+    background: var(--primary-background-color, #f5f7f9);
+    --surface: var(--card-background-color, #ffffff);
+    --surface-2: var(--secondary-background-color, #f0f3f5);
+    --line: var(--divider-color, #d5dfe5);
+    --accent: var(--accent-color, #087f73);
+    --muted: var(--secondary-text-color, #53636d);
+  }
 }
 
 * { box-sizing: border-box; }

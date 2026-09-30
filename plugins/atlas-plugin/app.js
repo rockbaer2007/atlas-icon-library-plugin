@@ -274,7 +274,11 @@ function iconSvgSource(icon, definition = icon) {
 function setImageSource(image, source) {
   if (!source || source.length > 2 * 1024 * 1024) return;
   const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().replaceAll('"', "") || "#29cdbb";
-  const colored = source.replace(/<svg\b/i, `<svg color="${accent}"`);
+  const colored = source.replace(/<svg\b([^>]*)>/i, (svg, attributes) => {
+    const colorAttribute = /\scolor\s*=/.test(attributes) ? "" : ` color="${accent}"`;
+    const fillAttribute = /\sfill\s*=/.test(attributes) ? "" : ` fill="${accent}"`;
+    return `<svg${attributes}${colorAttribute}${fillAttribute}>`;
+  });
   image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(colored)}`;
 }
 
