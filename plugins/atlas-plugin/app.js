@@ -1,4 +1,4 @@
-import { getVirtualRange, normalizeListedIcons, parseStaticIconsetSource, validateIcon } from "./library-core.js";
+import { getVirtualRange, isIconSetCandidate, normalizeListedIcons, parseStaticIconsetSource, validateIcon } from "./library-core.js";
 
 const dictionaries = {
   de: {
@@ -283,7 +283,7 @@ async function scanHomeAssistantIconSets() {
   setNotice("scanning");
   try {
     const tree = await fileStudioTree("/config/www");
-    const candidates = flattenTree(tree).filter((file) => file.extension === "js" && /icon/i.test(file.name) && file.size <= MAX_IMPORT_BYTES).slice(0, 200);
+    const candidates = flattenTree(tree).filter(isIconSetCandidate).slice(0, 500);
     const found = new Map();
     for (const file of candidates) {
       try {

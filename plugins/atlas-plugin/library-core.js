@@ -1,6 +1,13 @@
 const ICON_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SVG_PATH = /^[MmZzLlHhVvCcSsQqTtAa0-9.,+\-\sEe]+$/;
 
+export function isIconSetCandidate(file) {
+  if (file?.extension !== "js" || !Number.isFinite(file.size) || file.size > 64 * 1024 * 1024) return false;
+  const pathParts = String(file.path ?? file.name ?? "").split(/[\\/]+/);
+  const directoryParts = pathParts.slice(0, -1);
+  return /icon/i.test(file.name ?? "") || directoryParts.some((part) => /icon/i.test(part));
+}
+
 export function validateIcon(icon) {
   if (!icon || typeof icon.path !== "string" || !icon.path.trim() || !SVG_PATH.test(icon.path)) {
     throw new TypeError("Icon path must contain SVG path commands only.");

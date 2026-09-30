@@ -21,7 +21,7 @@ Voraussetzung: ATLAS 0.1.248 oder neuer. Ältere Versionen enthalten nicht die k
 - virtuelle Darstellung großer Iconlisten
 - Klick kopiert den vollständigen Namen, zum Beispiel `mdi:home` oder `atlas:home`
 - Icon-Studio-Iconsets sicher vom PC oder über File Studio aus `/config/www/` einlesen
-- `/config/www/` nach unterstützten Icon-Studio-Sets durchsuchen und Dateien desselben Präfixes zusammenfassen
+- `/config/www/` und Unterordner nach unterstützten Icon-Studio-Sets durchsuchen; berücksichtigt werden Dateien mit „icon“ im Namen oder in einem Ordnernamen (einschließlich `/config/www/community/`, in Home Assistant als `/local/community/` erreichbar)
 - Home-Assistant-Legacy-Sets verwenden, wenn `window.customIcons` eine Namensliste bereitstellt
 - eigene Import-Sets bleiben lokal in der Browser-IndexedDB gespeichert
 - DE/EN/FR und ein einheitlicher Plugin-Hub-Button oben rechts
