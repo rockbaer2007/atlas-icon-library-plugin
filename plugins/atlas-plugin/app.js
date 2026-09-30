@@ -288,6 +288,9 @@ async function scanHomeAssistantIconSets() {
     for (const file of candidates) {
       try {
         const parsed = parseStaticIconsetSource(await fileStudioRead(file.path));
+        // Candidate filenames/folders are only hints. Exclude unrelated JavaScript
+        // files unless the parser actually extracted at least one usable icon.
+        if (!Array.isArray(parsed.icons) || parsed.icons.length === 0) continue;
         let target = found.get(parsed.prefix);
         if (!target) {
           target = { prefix: parsed.prefix, icons: [], source: "home-assistant-scan", sourceFiles: [] };
@@ -304,6 +307,7 @@ async function scanHomeAssistantIconSets() {
         names.add(icon.name);
         return true;
       });
+      if (set.icons.length === 0) continue;
       if (iconSets.has(set.prefix) && !window.confirm(t("replaceSet", { set: setLabel(set.prefix) }))) continue;
       await storeIconSet(set);
       iconSets.set(set.prefix, set);

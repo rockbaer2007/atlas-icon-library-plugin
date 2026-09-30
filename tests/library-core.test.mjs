@@ -60,7 +60,19 @@ test("rejects executable expressions in community icon maps", () => {
     const ICONSET_NAME = "unsafe";
     const ICONS = { test: runCode() };
     window.customIcons["unsafe"] = getIcon;
+  `), /Unsupported(?: static)? icon set source/);
+});
+
+test("rejects empty icon maps and unrelated scripts even when filenames look like icon sets", () => {
+  assert.throws(() => parseStaticIconsetSource(`
+    const ICONSET_NAME = "empty";
+    const ICONS = { not_an_icon: "", };
+    window.customIcons["empty"] = getIcon;
   `), /Unsupported static icon set source/);
+  assert.throws(() => parseStaticIconsetSource(`
+    const Name = "Custom-icon-color";
+    window.customUI = { installEntityCardStylingHook() {} };
+  `), /Unsupported(?: static)? icon set source/);
 });
 
 test("calculates bounded row windows for a large virtualized icon grid", () => {
