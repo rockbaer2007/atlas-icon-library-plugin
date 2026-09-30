@@ -22,7 +22,7 @@
         "en": "ATLAS Icon Library",
         "fr": "Bibliothèque d’icônes ATLAS"
       },
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
       "descriptionI18n": {
         "de": "Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.",
@@ -41,7 +41,7 @@
         "atlas.plugin.icon-library"
       ],
       "compatibility": {
-        "atlas": ">=0.1.0",
+        "atlas": ">=0.1.248",
         "host": "administration-local"
       }
     }

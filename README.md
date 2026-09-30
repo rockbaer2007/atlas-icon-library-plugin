@@ -12,6 +12,8 @@ https://raw.githubusercontent.com/rockbaer2007/atlas-icon-library-plugin/main/re
 
 Das Plugin wird als eigenständiges Repository veröffentlicht und kann über diese Katalogadresse im ATLAS Plugin-Manager hinzugefügt werden.
 
+Voraussetzung: ATLAS 0.1.248 oder neuer. Ältere Versionen enthalten nicht die korrigierte Verarbeitung externer Plugin-Pakete.
+
 ## Funktionen
 
 - 7.447 lokal mitgelieferte MDI-Icons aus Version 7.4.47

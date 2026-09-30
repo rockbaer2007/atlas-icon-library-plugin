@@ -9,7 +9,7 @@
       "en": "ATLAS Icon Library",
       "fr": "Bibliothèque d’icônes ATLAS"
     },
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
     "descriptionI18n": {
       "de": "Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.",
@@ -29,7 +29,7 @@
     {
       "path": "atlas-plugin.json",
       "mediaType": "application/json",
-      "content": "{\n  \"id\": \"atlas.plugin.icon-library\",\n  \"name\": \"ATLAS Icon Library\",\n  \"nameI18n\": {\n    \"de\": \"ATLAS Icon Bibliothek\",\n    \"en\": \"ATLAS Icon Library\",\n    \"fr\": \"Bibliothèque d’icônes ATLAS\"\n  },\n  \"version\": \"0.1.0\",\n  \"description\": \"Browse, search and copy Home Assistant icon sets in a virtualized grid.\",\n  \"descriptionI18n\": {\n    \"de\": \"Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.\",\n    \"en\": \"Browse, search and copy Home Assistant icon sets in a virtualized grid.\",\n    \"fr\": \"Parcourir, rechercher et copier des jeux d’icônes Home Assistant dans une grille virtualisée.\"\n  },\n  \"status\": \"active\",\n  \"order\": 100,\n  \"entry\": \"/plugin-assets/icon-library/index.html\",\n  \"icon\": \"icon.svg\",\n  \"logo\": \"logo.svg\",\n  \"preview\": \"preview.svg\",\n  \"capabilities\": [\n    \"atlas.plugin.icon-library\"\n  ]\n}\n"
+      "content": "{\n  \"id\": \"atlas.plugin.icon-library\",\n  \"name\": \"ATLAS Icon Library\",\n  \"nameI18n\": {\n    \"de\": \"ATLAS Icon Bibliothek\",\n    \"en\": \"ATLAS Icon Library\",\n    \"fr\": \"Bibliothèque d’icônes ATLAS\"\n  },\n  \"version\": \"0.1.1\",\n  \"description\": \"Browse, search and copy Home Assistant icon sets in a virtualized grid.\",\n  \"descriptionI18n\": {\n    \"de\": \"Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.\",\n    \"en\": \"Browse, search and copy Home Assistant icon sets in a virtualized grid.\",\n    \"fr\": \"Parcourir, rechercher et copier des jeux d’icônes Home Assistant dans une grille virtualisée.\"\n  },\n  \"status\": \"active\",\n  \"order\": 100,\n  \"entry\": \"/plugin-assets/icon-library/index.html\",\n  \"icon\": \"icon.svg\",\n  \"logo\": \"logo.svg\",\n  \"preview\": \"preview.svg\",\n  \"capabilities\": [\n    \"atlas.plugin.icon-library\"\n  ]\n}\n"
     },
     {
       "path": "README.md",
