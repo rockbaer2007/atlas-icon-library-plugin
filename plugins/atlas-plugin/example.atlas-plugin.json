@@ -1,0 +1,68 @@
+{
+  "kind": "atlas.runtime.plugin.install-package",
+  "filename": "example.atlas-plugin.json",
+  "plugin": {
+    "id": "atlas.plugin.example",
+    "name": "ATLAS Example Plugin",
+    "nameI18n": {
+      "de": "ATLAS-Beispiel-Plugin",
+      "en": "ATLAS Example Plugin"
+    },
+    "version": "0.1.0",
+    "description": "A minimal working ATLAS plugin template.",
+    "descriptionI18n": {
+      "de": "Eine minimale, funktionsfähige Vorlage für ATLAS-Plugins.",
+      "en": "A minimal working template for ATLAS plugins."
+    },
+    "icon": "icon.svg",
+    "logo": "logo.svg",
+    "preview": "preview.svg",
+    "dependencies": [],
+    "extensionPoints": [],
+    "provides": [
+      "atlas.plugin.example"
+    ]
+  },
+  "files": [
+    {
+      "path": "atlas-plugin.json",
+      "mediaType": "application/json",
+      "content": "{\n  \"id\": \"atlas.plugin.example\",\n  \"name\": \"ATLAS Example Plugin\",\n  \"nameI18n\": {\n    \"de\": \"ATLAS-Beispiel-Plugin\",\n    \"en\": \"ATLAS Example Plugin\"\n  },\n  \"version\": \"0.1.0\",\n  \"description\": \"A minimal working ATLAS plugin template.\",\n  \"descriptionI18n\": {\n    \"de\": \"Eine minimale, funktionsfähige Vorlage für ATLAS-Plugins.\",\n    \"en\": \"A minimal working template for ATLAS plugins.\"\n  },\n  \"status\": \"active\",\n  \"order\": 100,\n  \"entry\": \"/plugin-assets/atlas-plugin/index.html\",\n  \"icon\": \"icon.svg\",\n  \"logo\": \"logo.svg\",\n  \"preview\": \"preview.svg\",\n  \"capabilities\": [\n    \"atlas.plugin.example\"\n  ]\n}\n"
+    },
+    {
+      "path": "README.md",
+      "mediaType": "text/markdown",
+      "content": "# ATLAS Example Plugin\n\nReplace this README with the purpose, setup, permissions, and usage instructions\nfor your plugin. Keep the plugin ID stable after you publish it.\n\nThis starter plugin has no privileged ATLAS capabilities and makes no network\nrequests.\n"
+    },
+    {
+      "path": "index.html",
+      "mediaType": "text/html",
+      "content": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <meta name=\"color-scheme\" content=\"dark light\">\n    <title>ATLAS Example Plugin</title>\n    <link rel=\"stylesheet\" href=\"styles.css\">\n  </head>\n  <body>\n    <main class=\"plugin-card\">\n      <img class=\"plugin-icon\" src=\"icon.svg\" alt=\"\">\n      <p class=\"eyebrow\">ATLAS PLUGIN TEMPLATE</p>\n      <h1>Example Plugin</h1>\n      <p class=\"description\">Your plugin starts here. Replace this page with its interface.</p>\n      <button id=\"example-button\" type=\"button\">Test interaction</button>\n      <p id=\"result\" class=\"result\" aria-live=\"polite\">Ready</p>\n    </main>\n    <script src=\"app.js\"></script>\n  </body>\n</html>\n"
+    },
+    {
+      "path": "styles.css",
+      "mediaType": "text/css",
+      "content": ":root {\n  color-scheme: dark;\n  font: 16px/1.5 system-ui, sans-serif;\n  color: #e8eef5;\n  background: #101820;\n}\n\n* { box-sizing: border-box; }\n\nbody {\n  min-height: 100vh;\n  margin: 0;\n  display: grid;\n  place-items: center;\n  padding: 24px;\n}\n\n.plugin-card {\n  width: min(100%, 560px);\n  padding: 28px;\n  border: 1px solid #334554;\n  border-radius: 18px;\n  background: #192631;\n  box-shadow: 0 20px 60px #0005;\n}\n\n.plugin-icon { width: 56px; height: 56px; }\n.eyebrow { margin: 20px 0 4px; color: #58d3bd; font-size: 12px; font-weight: 700; letter-spacing: .08em; }\nh1 { margin: 0; font-size: clamp(1.7rem, 5vw, 2.4rem); }\n.description { color: #b6c4ce; }\nbutton { padding: 10px 16px; border: 0; border-radius: 9px; background: #168f83; color: white; font: inherit; font-weight: 700; cursor: pointer; }\nbutton:hover { background: #20a99b; }\n.result { min-height: 1.5em; color: #58d3bd; }\n"
+    },
+    {
+      "path": "app.js",
+      "mediaType": "text/javascript",
+      "content": "const button = document.querySelector(\"#example-button\");\nconst result = document.querySelector(\"#result\");\n\nbutton.addEventListener(\"click\", () => {\n  result.textContent = \"The plugin page is running.\";\n});\n"
+    },
+    {
+      "path": "icon.svg",
+      "mediaType": "image/svg+xml",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" role=\"img\" aria-label=\"ATLAS plugin icon\">\n  <rect x=\"3\" y=\"3\" width=\"58\" height=\"58\" rx=\"15\" fill=\"#142b38\" stroke=\"#58d3bd\" stroke-width=\"2\"/>\n  <path d=\"M15 45 29 17h7l14 28h-8l-3-7H26l-3 7Zm14-14h7l-3.5-8Z\" fill=\"#e8eef5\"/>\n</svg>\n"
+    },
+    {
+      "path": "logo.svg",
+      "mediaType": "image/svg+xml",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 120\" role=\"img\" aria-label=\"ATLAS Example Plugin\">\n  <rect width=\"420\" height=\"120\" rx=\"22\" fill=\"#14232d\"/>\n  <rect x=\"22\" y=\"22\" width=\"76\" height=\"76\" rx=\"18\" fill=\"#142b38\" stroke=\"#58d3bd\" stroke-width=\"2\"/>\n  <path d=\"m38 78 17-38h9l18 38H72l-4-10H50l-4 10Zm15-18h12l-6-13Z\" fill=\"#e8eef5\"/>\n  <text x=\"120\" y=\"57\" fill=\"#e8eef5\" font-family=\"system-ui,sans-serif\" font-size=\"25\" font-weight=\"700\">ATLAS</text>\n  <text x=\"120\" y=\"83\" fill=\"#58d3bd\" font-family=\"system-ui,sans-serif\" font-size=\"17\">Example Plugin</text>\n</svg>\n"
+    },
+    {
+      "path": "preview.svg",
+      "mediaType": "image/svg+xml",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 540\" role=\"img\" aria-labelledby=\"title description\">\n  <title id=\"title\">ATLAS Example Plugin preview</title>\n  <desc id=\"description\">A clean starter interface for an ATLAS plugin.</desc>\n  <rect width=\"960\" height=\"540\" fill=\"#101820\"/>\n  <rect x=\"64\" y=\"48\" width=\"832\" height=\"444\" rx=\"22\" fill=\"#192631\" stroke=\"#334554\" stroke-width=\"2\"/>\n  <rect x=\"100\" y=\"86\" width=\"58\" height=\"58\" rx=\"15\" fill=\"#142b38\" stroke=\"#58d3bd\" stroke-width=\"2\"/>\n  <path d=\"m113 128 14-29h6l15 29h-8l-3-7h-15l-3 7Z\" fill=\"#e8eef5\"/>\n  <text x=\"100\" y=\"190\" fill=\"#58d3bd\" font-family=\"system-ui,sans-serif\" font-size=\"17\" font-weight=\"700\">ATLAS PLUGIN TEMPLATE</text>\n  <text x=\"100\" y=\"236\" fill=\"#e8eef5\" font-family=\"system-ui,sans-serif\" font-size=\"34\" font-weight=\"700\">Example Plugin</text>\n  <rect x=\"100\" y=\"270\" width=\"570\" height=\"12\" rx=\"6\" fill=\"#334554\"/>\n  <rect x=\"100\" y=\"296\" width=\"460\" height=\"12\" rx=\"6\" fill=\"#334554\"/>\n  <rect x=\"100\" y=\"352\" width=\"174\" height=\"48\" rx=\"10\" fill=\"#168f83\"/>\n  <text x=\"122\" y=\"383\" fill=\"#fff\" font-family=\"system-ui,sans-serif\" font-size=\"17\" font-weight=\"700\">Test interaction</text>\n</svg>\n"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title description">
+  <title id="title">ATLAS Icon Library</title>
+  <desc id="description">Search and browse Home Assistant icons in a responsive grid.</desc>
+  <rect width="960" height="540" fill="#101820"/>
+  <rect x="36" y="28" width="888" height="484" rx="18" fill="#19252b" stroke="#34444c" stroke-width="2"/>
+  <text x="68" y="70" fill="#29cdbb" font-family="system-ui,sans-serif" font-size="15" font-weight="700">ATLAS PLUGIN</text>
+  <text x="68" y="108" fill="#eff9fb" font-family="system-ui,sans-serif" font-size="28" font-weight="700">ATLAS Icon Bibliothek</text>
+  <rect x="68" y="130" width="210" height="42" rx="8" fill="#111a1e" stroke="#34444c"/>
+  <text x="84" y="157" fill="#eff9fb" font-family="system-ui,sans-serif" font-size="16">MDI</text>
+  <rect x="294" y="130" width="530" height="42" rx="8" fill="#111a1e" stroke="#34444c"/>
+  <text x="310" y="157" fill="#aebdc5" font-family="system-ui,sans-serif" font-size="15">Icons suchen</text>
+  <g fill="#29cdbb" font-family="system-ui,sans-serif" font-size="12" text-anchor="middle">
+    <path d="M110 210h34v34h-34z"/><text x="127" y="263" fill="#eff9fb">home</text>
+    <path d="M216 210h34v34h-34z"/><text x="233" y="263" fill="#eff9fb">lightbulb</text>
+    <path d="M322 210h34v34h-34z"/><text x="339" y="263" fill="#eff9fb">thermometer</text>
+    <path d="M428 210h34v34h-34z"/><text x="445" y="263" fill="#eff9fb">account</text>
+    <path d="M534 210h34v34h-34z"/><text x="551" y="263" fill="#eff9fb">alarm</text>
+    <path d="M640 210h34v34h-34z"/><text x="657" y="263" fill="#eff9fb">arrow-left</text>
+    <path d="M746 210h34v34h-34z"/><text x="763" y="263" fill="#eff9fb">battery</text>
+  </g>
+  <text x="68" y="466" fill="#aebdc5" font-family="system-ui,sans-serif" font-size="15">7,447 MDI icons · Virtualized grid · Click an icon to copy its ID</text>
+</svg>

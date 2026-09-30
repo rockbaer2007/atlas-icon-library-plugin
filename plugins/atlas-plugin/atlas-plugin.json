@@ -1,0 +1,25 @@
+{
+  "id": "atlas.plugin.icon-library",
+  "name": "ATLAS Icon Library",
+  "nameI18n": {
+    "de": "ATLAS Icon Bibliothek",
+    "en": "ATLAS Icon Library",
+    "fr": "Bibliothèque d’icônes ATLAS"
+  },
+  "version": "0.1.0",
+  "description": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
+  "descriptionI18n": {
+    "de": "Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.",
+    "en": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
+    "fr": "Parcourir, rechercher et copier des jeux d’icônes Home Assistant dans une grille virtualisée."
+  },
+  "status": "active",
+  "order": 100,
+  "entry": "/plugin-assets/icon-library/index.html",
+  "icon": "icon.svg",
+  "logo": "logo.svg",
+  "preview": "preview.svg",
+  "capabilities": [
+    "atlas.plugin.icon-library"
+  ]
+}

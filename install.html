@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Install ATLAS Icon Bibliothek</title>
+    <style>
+      :root { color-scheme: dark; font: 16px/1.55 system-ui, sans-serif; color: #e8eef5; background: #101820; }
+      * { box-sizing: border-box; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 24px; }
+      main { width: min(100%, 680px); padding: 28px; border: 1px solid #334554; border-radius: 18px; background: #192631; }
+      h1 { margin-top: 0; }
+      code { overflow-wrap: anywhere; color: #8be3d5; }
+      a, button { color: #8be3d5; }
+      button { padding: 10px 14px; border: 0; border-radius: 8px; background: #168f83; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+      .note { color: #b6c4ce; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>ATLAS Icon Bibliothek</h1>
+      <p>Add this repository to ATLAS Administration to install the Home Assistant icon library.</p>
+      <p><code id="repository-url"></code></p>
+      <button id="copy-url" type="button">Copy repository URL</button>
+      <p id="status" class="note" aria-live="polite"></p>
+      <p class="note">Current ATLAS repository installs store package files; they do not execute arbitrary downloaded plugin code yet.</p>
+      <p class="note">The MDI catalog is included locally. Other icon sets are listed when their API exposes icon names, or can be imported from supported Icon Studio JavaScript files.</p>
+    </main>
+    <script>
+      const owner = "rockbaer2007";
+      const repository = "atlas-icon-library-plugin";
+      const url = `https://raw.githubusercontent.com/${owner}/${repository}/main/repository.json`;
+      document.querySelector("#repository-url").textContent = url;
+      document.querySelector("#copy-url").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          document.querySelector("#status").textContent = "Copied. Paste the URL into ATLAS Administration.";
+        } catch {
+          document.querySelector("#status").textContent = "Copy unavailable. Select and copy the URL above.";
+        }
+      });
+    </script>
+  </body>
+</html>

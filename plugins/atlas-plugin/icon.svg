@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ATLAS Icon Library">
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="#142b38" stroke="#29cdbb" stroke-width="2"/>
+  <g fill="#29cdbb">
+    <path d="M14 14h13v13H14zM33 14h17v13H33zM14 33h17v17H14zM37 33h13v7H37zM37 43h13v7H37z"/>
+  </g>
+  <circle cx="45" cy="37" r="2" fill="#f49a0b"/>
+</svg>

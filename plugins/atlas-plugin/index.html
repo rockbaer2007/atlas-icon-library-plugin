@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>ATLAS Icon Bibliothek</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <div class="brand">
+          <img src="icon.svg" alt="" width="46" height="46">
+          <div>
+            <p class="eyebrow" data-i18n="eyebrow">ATLAS PLUGIN</p>
+            <h1 data-i18n="title">ATLAS Icon Bibliothek</h1>
+            <p class="intro" data-i18n="intro">Durchsuche Iconsets und kopiere Icons für Home Assistant.</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a class="button hub" href="../../hub">Plugin Hub</a>
+          <div class="languages" role="group" aria-label="Sprache" data-i18n-aria="language">
+            <button type="button" data-language="de" aria-pressed="true">DE</button>
+            <button type="button" data-language="en" aria-pressed="false">EN</button>
+            <button type="button" data-language="fr" aria-pressed="false">FR</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="controls panel">
+        <label for="iconset-select" data-i18n="iconSet">Iconset</label>
+        <select id="iconset-select"></select>
+        <label for="icon-search" data-i18n="search">Icons suchen</label>
+        <input id="icon-search" type="search" autocomplete="off" placeholder="Name oder Stichwort" data-i18n-placeholder="searchPlaceholder">
+        <label for="ha-iconset-path" data-i18n="haPath">Home-Assistant-Datei</label>
+        <div class="path-row">
+          <input id="ha-iconset-path" value="/config/www/atlas-iconset.js" spellcheck="false">
+          <button id="load-ha-iconset" class="button" type="button" data-i18n="loadHa">Aus Home Assistant laden</button>
+          <button id="scan-ha-iconsets" class="button" type="button" data-i18n="scanHa">Iconsets in Home Assistant finden</button>
+          <label class="button import" for="import-iconset" data-i18n="importFile">Datei importieren</label>
+          <input id="import-iconset" class="visually-hidden" type="file" accept=".js,application/javascript">
+        </div>
+        <p id="notice" class="notice" role="status" aria-live="polite" data-i18n="loading">Iconkatalog wird geladen …</p>
+      </section>
+
+      <section class="library panel" aria-labelledby="set-title">
+        <div class="library-heading">
+          <div>
+            <p class="eyebrow" data-i18n="selectedSet">AUSGEWÄHLTES ICONSET</p>
+            <h2 id="set-title">MDI</h2>
+          </div>
+          <span id="icon-count" class="count">0</span>
+        </div>
+        <div id="icon-grid" class="icon-grid" role="list" aria-label="Icons"></div>
+      </section>
+      <p class="footnote" data-i18n="apiNote">Home Assistant listet benutzerdefinierte Iconsets nicht automatisch. Sichtbar sind MDI, einlesbare Icon Studio-Sets und Sets, die eine Iconliste bereitstellen.</p>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

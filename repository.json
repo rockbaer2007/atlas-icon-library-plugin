@@ -1,0 +1,49 @@
+{
+  "kind": "atlas.plugin.repository",
+  "atlas": {
+    "type": "plugin-repository",
+    "schemaVersion": 1
+  },
+  "name": "ATLAS Icon Library Plugin Repository",
+  "version": "1",
+  "homepage": "https://github.com/rockbaer2007/atlas-icon-library-plugin",
+  "installPage": "https://rockbaer2007.github.io/atlas-icon-library-plugin/install.html",
+  "maintainer": "UGSo Software",
+  "plugins": [
+    {
+      "id": "atlas.plugin.icon-library",
+      "atlas": {
+        "type": "plugin",
+        "schemaVersion": 1
+      },
+      "name": "ATLAS Icon Library",
+      "nameI18n": {
+        "de": "ATLAS Icon Bibliothek",
+        "en": "ATLAS Icon Library",
+        "fr": "Bibliothèque d’icônes ATLAS"
+      },
+      "version": "0.1.0",
+      "description": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
+      "descriptionI18n": {
+        "de": "Home-Assistant-Iconsets in einem virtualisierten Raster anzeigen, durchsuchen und kopieren.",
+        "en": "Browse, search and copy Home Assistant icon sets in a virtualized grid.",
+        "fr": "Parcourir, rechercher et copier des jeux d’icônes Home Assistant dans une grille virtualisée."
+      },
+      "homepage": "https://github.com/rockbaer2007/atlas-icon-library-plugin",
+      "installPage": "https://rockbaer2007.github.io/atlas-icon-library-plugin/install.html",
+      "icon": "./plugins/atlas-plugin/icon.svg",
+      "logo": "./plugins/atlas-plugin/logo.svg",
+      "preview": "./plugins/atlas-plugin/preview.svg",
+      "entry": "/plugin-assets/icon-library/index.html",
+      "package": "./plugins/atlas-plugin/icon-library.atlas-plugin.json",
+      "manifest": "./plugins/atlas-plugin/atlas-plugin.json",
+      "capabilities": [
+        "atlas.plugin.icon-library"
+      ],
+      "compatibility": {
+        "atlas": ">=0.1.0",
+        "host": "administration-local"
+      }
+    }
+  ]
+}

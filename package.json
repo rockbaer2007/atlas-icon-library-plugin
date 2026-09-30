@@ -1,0 +1,11 @@
+{
+  "name": "atlas-icon-library-plugin",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "ATLAS icon set library plugin for Home Assistant",
+  "scripts": {
+    "build": "node scripts/build-package.mjs",
+    "check": "node scripts/validate.mjs",
+    "test": "node --test"
+  }
+}
