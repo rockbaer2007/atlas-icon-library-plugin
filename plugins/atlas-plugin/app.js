@@ -6,7 +6,7 @@ const dictionaries = {
     language: "Sprache", iconSet: "Iconset", search: "Icons suchen", searchPlaceholder: "Name oder Stichwort",
     haPath: "Home-Assistant-Datei", loadHa: "Aus Home Assistant laden", importFile: "Datei importieren",
     scanHa: "Iconsets in Home Assistant finden", scanning: "Suche nach Iconsets in /config/www …",
-    scanDone: "{sets} Iconset(s) mit insgesamt {count} Icons gefunden.", countLabel: "{count} Icons",
+    scanDone: "{sets} Iconset(s) mit insgesamt {count} Icons gefunden. {files} JS-Kandidaten geprüft, {read} lesbar, {skipped} übersprungen{issue}.", countLabel: "{count} Icons",
     loading: "Iconkatalog wird geladen …", loadedMdi: "{count} MDI-Icons geladen (Version {version}).",
     loadedSet: "{count} Icons aus {set} geladen.", copied: "{icon} kopiert.", copyFailed: "Kopieren nicht möglich: {icon}",
     imported: "Iconset {set} mit {count} Icons importiert.", loadFailed: "Iconset konnte nicht geladen werden: {message}",
@@ -19,7 +19,7 @@ const dictionaries = {
     language: "Language", iconSet: "Icon set", search: "Search icons", searchPlaceholder: "Name or keyword",
     haPath: "Home Assistant file", loadHa: "Load from Home Assistant", importFile: "Import file",
     scanHa: "Find icon sets in Home Assistant", scanning: "Searching /config/www for icon sets…",
-    scanDone: "Found {sets} icon set(s) with {count} icons in total.", countLabel: "{count} icons",
+    scanDone: "Found {sets} icon set(s) with {count} icons. Checked {files} JS candidates, read {read}, skipped {skipped}{issue}.", countLabel: "{count} icons",
     loading: "Loading icon catalog…", loadedMdi: "Loaded {count} MDI icons (version {version}).",
     loadedSet: "Loaded {count} icons from {set}.", copied: "Copied {icon}.", copyFailed: "Could not copy {icon}.",
     imported: "Imported icon set {set} with {count} icons.", loadFailed: "Could not load icon set: {message}",
@@ -32,7 +32,7 @@ const dictionaries = {
     language: "Langue", iconSet: "Jeu d’icônes", search: "Rechercher des icônes", searchPlaceholder: "Nom ou mot-clé",
     haPath: "Fichier Home Assistant", loadHa: "Charger depuis Home Assistant", importFile: "Importer un fichier",
     scanHa: "Rechercher des jeux dans Home Assistant", scanning: "Recherche de jeux d’icônes dans /config/www…",
-    scanDone: "{sets} jeu(x) d’icônes trouvé(s), {count} icônes au total.", countLabel: "{count} icônes",
+    scanDone: "{sets} jeu(x) d’icônes trouvé(s), {count} icônes. {files} fichiers JS vérifiés, {read} lisibles, {skipped} ignorés{issue}.", countLabel: "{count} icônes",
     loading: "Chargement du catalogue d’icônes…", loadedMdi: "{count} icônes MDI chargées (version {version}).",
     loadedSet: "{count} icônes chargées depuis {set}.", copied: "{icon} copié.", copyFailed: "Impossible de copier {icon}.",
     imported: "Jeu d’icônes {set} importé avec {count} icônes.", loadFailed: "Impossible de charger le jeu d’icônes : {message}",
@@ -260,6 +260,7 @@ async function fileStudioRead(path) {
   const response = await fetch(url, { cache: "no-store", credentials: "same-origin" });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(result.error ?? `HTTP ${response.status}`);
+  if (typeof result.content !== "string") throw new Error(result.error ?? "File Studio returned no file content.");
   return result.content;
 }
 
@@ -270,6 +271,8 @@ async function fileStudioTree(path, depth = 8) {
   const response = await fetch(url, { cache: "no-store", credentials: "same-origin" });
   const result = await response.json().catch(() => ({}));
   if (!response.ok || result.error) throw new Error(result.error ?? `HTTP ${response.status}`);
+  if (result.exists === false) throw new Error(result.message ?? `${path} is not available.`);
+  if (!result.tree || typeof result.tree !== "object") throw new Error("File Studio returned no directory tree.");
   return result.tree;
 }
 
@@ -283,11 +286,17 @@ async function scanHomeAssistantIconSets() {
   setNotice("scanning");
   try {
     const tree = await fileStudioTree("/config/www");
-    const candidates = flattenTree(tree).filter(isIconSetCandidate).slice(0, 500);
+    const allCandidates = flattenTree(tree).filter(isIconSetCandidate);
+    const candidates = allCandidates.slice(0, 500);
     const found = new Map();
+    let readable = 0;
+    let skippedCount = 0;
+    const skipped = [];
     for (const file of candidates) {
       try {
-        const parsed = parseStaticIconsetSource(await fileStudioRead(file.path));
+        const source = await fileStudioRead(file.path);
+        readable += 1;
+        const parsed = parseStaticIconsetSource(source);
         // Candidate filenames/folders are only hints. Exclude unrelated JavaScript
         // files unless the parser actually extracted at least one usable icon.
         if (!Array.isArray(parsed.icons) || parsed.icons.length === 0) continue;
@@ -298,7 +307,10 @@ async function scanHomeAssistantIconSets() {
         }
         target.icons.push(...parsed.icons);
         target.sourceFiles.push(file.path);
-      } catch { /* Only accept static, supported icon-set code; skip unrelated JavaScript safely. */ }
+      } catch (error) {
+        skippedCount += 1;
+        if (skipped.length < 3) skipped.push(`${file.path}: ${error.message}`);
+      }
     }
     for (const set of found.values()) {
       const names = new Set();
@@ -314,7 +326,15 @@ async function scanHomeAssistantIconSets() {
     }
     updateSetSelector();
     const iconCount = [...found.values()].reduce((sum, set) => sum + set.icons.length, 0);
-    setNotice("scanDone", { sets: found.size, count: iconCount.toLocaleString(language) });
+    const issue = skipped.length ? ` — ${skipped[0]}` : "";
+    setNotice("scanDone", {
+      sets: found.size,
+      count: iconCount.toLocaleString(language),
+      files: candidates.length,
+      read: readable,
+      skipped: skippedCount,
+      issue,
+    });
   } catch (error) {
     setNotice("loadFailed", { message: error.message }, true);
   }
