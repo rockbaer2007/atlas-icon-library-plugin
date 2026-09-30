@@ -25,6 +25,8 @@ Voraussetzung: ATLAS 0.1.248 oder neuer. Ältere Versionen enthalten nicht die k
 - Home-Assistant-Legacy-Sets verwenden, wenn `window.customIcons` eine Namensliste bereitstellt
 - eigene Import-Sets bleiben lokal in der Browser-IndexedDB gespeichert
 - DE/EN/FR und ein einheitlicher Plugin-Hub-Button oben rechts
+- Der MDI-Katalog ist im Plugin enthalten. Die Quellenanzeige nennt ihn als integrierten Katalog und zeigt dafür keinen irreführenden Home-Assistant-Dateipfad an.
+- SVG-Icons erhalten die Akzentfarbe, sofern das SVG keine eigene Füllfarbe festlegt. Die Oberfläche folgt dem Hell-/Dunkel-Farbschema des Browsers.
 
 Die moderne Home-Assistant-Schnittstelle `window.customIconsets` stellt keinen allgemeinen Namensindex bereit. Sets ohne eigene Iconliste können deshalb nicht automatisch vollständig aufgelistet werden. Das Plugin führt fremden JavaScript-Code nicht aus. Für den direkten Dateizugriff muss `/config/www` in File Studio freigegeben sein; ein Home-Assistant-Token wird nicht benötigt.
 

@@ -11,6 +11,7 @@ Eigenständiges ATLAS-Plugin zum Durchsuchen von Home-Assistant-Iconsets. Die Ob
 - **Custom Icons – Iconify-Sets:** aktive Iconify-Sets aus der Home-Assistant-Integration können separat gescannt werden. Sie erscheinen nach ihrem Namen und Präfix, zum Beispiel „Ant Design Icons (`ant-design`)“, und ihre Icons lassen sich durchsuchen und kopieren.
 - **Custom Local Icons (`cli:`):** SVG-Dateien unter `/config/www/custom_local_icons/` einschließlich Unterordnern erscheinen als Grafiken; Unterordner werden in den Namen übernommen.
 - Vor dem Scannen kann zwischen normalen Iconsets und aktiven Iconify-Sets gewählt werden. Das Quellenfeld zeigt den Speicherort der ausgewählten Sammlung.
+- Der mitgelieferte MDI-Katalog wird als integrierte Quelle angezeigt, nicht als `/config/www/atlas-iconset.js`. SVG-Icons verwenden standardmäßig die Akzentfarbe; das Erscheinungsbild folgt dem Hell-/Dunkel-Farbschema des Browsers.
 
 Home Assistant bietet für die moderne `window.customIconsets`-Schnittstelle keinen allgemeinen Aufruf, um alle Iconnamen eines Sets abzufragen. Solche Sets können nur angezeigt werden, wenn sie zusätzlich eine Namensliste bereitstellen oder als unterstützte statische Icon-Studio-Datei importiert werden. Das Plugin führt fremden JavaScript-Code nicht aus. Für File-Studio-Zugriff muss `/config/www` freigegeben sein. Importierte Sets bleiben lokal in IndexedDB gespeichert; ein Home-Assistant-Token wird nicht benötigt.
 
@@ -25,6 +26,7 @@ Standalone ATLAS plugin for browsing Home Assistant icon sets. The interface pro
 - **Custom Icons – Iconify sets:** active Iconify sets from the Home Assistant integration can be scanned separately. They appear with their display name and prefix, for example “Ant Design Icons (`ant-design`)”, and their icons can be searched and copied.
 - **Custom Local Icons (`cli:`):** SVG files in `/config/www/custom_local_icons/`, including subfolders, appear as images; subfolder names are preserved.
 - Choose between standard icon sets and active Iconify sets before scanning. The source field shows the selected collection's location.
+- The bundled MDI catalog is identified as an integrated source, rather than being shown as `/config/www/atlas-iconset.js`. SVG icons use the accent color by default, and the interface follows the browser's light or dark color scheme.
 
 Home Assistant's modern `window.customIconsets` interface has no general method for listing every icon name in a set. Such sets can only be displayed when they also provide a name list or are imported as a supported static Icon Studio file. The plugin does not execute third-party JavaScript. File Studio must allow `/config/www` for direct file access. Imported sets are stored locally in browser IndexedDB; no Home Assistant token is required.
 
@@ -39,6 +41,7 @@ Plugin ATLAS indépendant pour parcourir les jeux d’icônes Home Assistant. L�
 - **Jeux Iconify de Custom Icons :** les jeux Iconify actifs de l’intégration Home Assistant peuvent être analysés séparément. Ils apparaissent avec leur nom et leur préfixe, par exemple « Ant Design Icons (`ant-design`) » ; leurs icônes peuvent être recherchées et copiées.
 - **Custom Local Icons (`cli:`) :** les fichiers SVG dans `/config/www/custom_local_icons/`, y compris les sous-dossiers, sont affichés comme des images ; les sous-dossiers sont conservés dans le nom.
 - Choisissez entre les jeux d’icônes standard et les jeux Iconify actifs avant l’analyse. Le champ source affiche l’emplacement de la collection sélectionnée.
+- Le catalogue MDI fourni est indiqué comme source intégrée et non comme `/config/www/atlas-iconset.js`. Par défaut, les icônes SVG utilisent la couleur d’accent et l’interface suit le thème clair ou sombre du navigateur.
 
 L’interface moderne `window.customIconsets` de Home Assistant ne fournit aucune méthode générale pour obtenir la liste complète des noms d’un jeu. Ces jeux ne sont affichés que s’ils fournissent également une liste de noms ou s’ils sont importés comme fichiers statiques Icon Studio compatibles. Le plugin n’exécute pas de code JavaScript tiers. L’accès direct nécessite d’autoriser `/config/www` dans File Studio. Les jeux importés sont stockés localement dans IndexedDB du navigateur ; aucun jeton Home Assistant n’est nécessaire.
 
