@@ -33,10 +33,14 @@
         <select id="iconset-select"></select>
         <label for="icon-search" data-i18n="search">Icons suchen</label>
         <input id="icon-search" type="search" autocomplete="off" placeholder="Name oder Stichwort" data-i18n-placeholder="searchPlaceholder">
-        <label for="ha-iconset-path" data-i18n="haPath">Home-Assistant-Datei</label>
+        <label for="ha-iconset-path" data-i18n="haPath">Quelle / Pfad</label>
         <div class="path-row">
           <input id="ha-iconset-path" value="/config/www/atlas-iconset.js" spellcheck="false">
           <button id="load-ha-iconset" class="button" type="button" data-i18n="loadHa">Aus Home Assistant laden</button>
+          <select id="scan-mode" aria-label="Scanbereich" data-i18n-aria="scanMode">
+            <option value="normal" data-i18n="normalSets">Normale Iconsets</option>
+            <option value="iconify" data-i18n="iconifySets">Custom Icons – Iconify-Sets</option>
+          </select>
           <button id="scan-ha-iconsets" class="button" type="button" data-i18n="scanHa">Iconsets in Home Assistant finden</button>
           <label class="button import" for="import-iconset" data-i18n="importFile">Datei importieren</label>
           <input id="import-iconset" class="visually-hidden" type="file" accept=".js,application/javascript">

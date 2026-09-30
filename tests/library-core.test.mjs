@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { getVirtualRange, isIconSetCandidate, normalizeListedIcons, parseStaticIconsetSource, validateIcon } from "../plugins/atlas-plugin/library-core.js";
+import { cliIconName, getVirtualRange, isCliSvgCandidate, isIconSetCandidate, normalizeListedIcons, parseStaticIconsetSource, validateIcon } from "../plugins/atlas-plugin/library-core.js";
 
 test("finds icon set JavaScript by filename or icon-named folder under local paths", () => {
   assert.equal(isIconSetCandidate({ path: "/config/www/community/my-icon-pack/icons.js", name: "icons.js", extension: "js", size: 100 }), true);
@@ -9,6 +9,14 @@ test("finds icon set JavaScript by filename or icon-named folder under local pat
   assert.equal(isIconSetCandidate({ path: "/config/www/community/mdi.js", name: "mdi.js", extension: "js", size: 100 }), false);
   assert.equal(isIconSetCandidate({ path: "/config/www/icon-pack/image.png", name: "image.png", extension: "png", size: 100 }), false);
   assert.equal(isIconSetCandidate({ path: "/config/www/icon-pack/large.js", name: "large.js", extension: "js", size: 64 * 1024 * 1024 + 1 }), false);
+});
+
+test("discovers Custom Local Icons SVGs recursively and keeps their relative names", () => {
+  const file = { path: "/config/www/custom_local_icons/rooms/kitchen.svg", extension: "svg", size: 300 };
+  assert.equal(isCliSvgCandidate(file), true);
+  assert.equal(cliIconName(file.path), "rooms/kitchen");
+  assert.equal(isCliSvgCandidate({ ...file, path: "/config/www/community/rooms/kitchen.svg" }), false);
+  assert.throws(() => cliIconName("/config/www/custom_local_icons/../secret.svg"), /valid/);
 });
 
 const sample = { path: "M2 12 12 3l10 9h-3v9h-5v-6h-4v6H5v-9z", viewBox: "0 0 24 24" };

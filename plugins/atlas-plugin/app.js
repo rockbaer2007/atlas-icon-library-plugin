@@ -1,12 +1,12 @@
-import { getVirtualRange, isIconSetCandidate, normalizeListedIcons, parseStaticIconsetSource, validateIcon } from "./library-core.js";
+import { cliIconName, getVirtualRange, isCliSvgCandidate, isIconSetCandidate, normalizeListedIcons, parseStaticIconsetSource, validateIcon } from "./library-core.js";
 
 const dictionaries = {
   de: {
     eyebrow: "ATLAS PLUGIN", title: "ATLAS Icon Bibliothek", intro: "Durchsuche Iconsets und kopiere Icons für Home Assistant.",
-    language: "Sprache", iconSet: "Iconset", search: "Icons suchen", searchPlaceholder: "Name oder Stichwort",
-    haPath: "Home-Assistant-Datei", loadHa: "Aus Home Assistant laden", importFile: "Datei importieren",
-    scanHa: "Iconsets in Home Assistant finden", scanning: "Suche nach Iconsets in /config/www …",
-    scanDone: "{sets} Iconset(s) mit insgesamt {count} Icons gefunden. {files} JS-Kandidaten geprüft, {read} lesbar, {skipped} übersprungen{issue}.", countLabel: "{count} Icons",
+    language: "Sprache", iconSet: "Iconset", search: "Icons suchen", searchPlaceholder: "Name oder Stichwort", scanMode: "Scanbereich", normalSets: "Normale Iconsets", iconifySets: "Custom Icons – Iconify-Sets",
+    haPath: "Quelle / Pfad", loadHa: "Aus Home Assistant laden", importFile: "Datei importieren",
+    scanHa: "Iconsets in Home Assistant finden", scanning: "Suche nach Iconsets in /config/www …", scanningIconify: "Lade aktive Iconify-Sets aus Custom Icons …",
+    scanDone: "{sets} Iconset(s) mit insgesamt {count} Icons gefunden. {files} JS-Dateien und {svgFiles} CLI-SVGs geprüft, {read} lesbar, {skipped} übersprungen{issue}.", iconifyScanDone: "{sets} aktive Iconify-Sets mit insgesamt {count} Icons aus Custom Icons geladen.", iconifyUnavailable: "Custom Icons ist in diesem Fenster nicht erreichbar. Öffne die Bibliothek über Home Assistant und prüfe, ob die Sets in Custom Icons aktiviert sind.", countLabel: "{count} Icons",
     loading: "Iconkatalog wird geladen …", loadedMdi: "{count} MDI-Icons geladen (Version {version}).",
     loadedSet: "{count} Icons aus {set} geladen.", copied: "{icon} kopiert.", copyFailed: "Kopieren nicht möglich: {icon}",
     imported: "Iconset {set} mit {count} Icons importiert.", loadFailed: "Iconset konnte nicht geladen werden: {message}",
@@ -16,10 +16,10 @@ const dictionaries = {
   },
   en: {
     eyebrow: "ATLAS PLUGIN", title: "ATLAS Icon Library", intro: "Browse icon sets and copy icons for Home Assistant.",
-    language: "Language", iconSet: "Icon set", search: "Search icons", searchPlaceholder: "Name or keyword",
-    haPath: "Home Assistant file", loadHa: "Load from Home Assistant", importFile: "Import file",
-    scanHa: "Find icon sets in Home Assistant", scanning: "Searching /config/www for icon sets…",
-    scanDone: "Found {sets} icon set(s) with {count} icons. Checked {files} JS candidates, read {read}, skipped {skipped}{issue}.", countLabel: "{count} icons",
+    language: "Language", iconSet: "Icon set", search: "Search icons", searchPlaceholder: "Name or keyword", scanMode: "Scan source", normalSets: "Standard icon sets", iconifySets: "Custom Icons – Iconify sets",
+    haPath: "Source / path", loadHa: "Load from Home Assistant", importFile: "Import file",
+    scanHa: "Find icon sets in Home Assistant", scanning: "Searching /config/www for icon sets…", scanningIconify: "Loading active Iconify sets from Custom Icons…",
+    scanDone: "Found {sets} icon set(s) with {count} icons. Checked {files} JS files and {svgFiles} CLI SVGs, read {read}, skipped {skipped}{issue}.", iconifyScanDone: "Loaded {sets} active Iconify sets with {count} icons from Custom Icons.", iconifyUnavailable: "Custom Icons is not available in this window. Open the library through Home Assistant and check that the sets are enabled in Custom Icons.", countLabel: "{count} icons",
     loading: "Loading icon catalog…", loadedMdi: "Loaded {count} MDI icons (version {version}).",
     loadedSet: "Loaded {count} icons from {set}.", copied: "Copied {icon}.", copyFailed: "Could not copy {icon}.",
     imported: "Imported icon set {set} with {count} icons.", loadFailed: "Could not load icon set: {message}",
@@ -29,10 +29,10 @@ const dictionaries = {
   },
   fr: {
     eyebrow: "PLUGIN ATLAS", title: "Bibliothèque d’icônes ATLAS", intro: "Parcourez les jeux d’icônes et copiez des icônes pour Home Assistant.",
-    language: "Langue", iconSet: "Jeu d’icônes", search: "Rechercher des icônes", searchPlaceholder: "Nom ou mot-clé",
-    haPath: "Fichier Home Assistant", loadHa: "Charger depuis Home Assistant", importFile: "Importer un fichier",
-    scanHa: "Rechercher des jeux dans Home Assistant", scanning: "Recherche de jeux d’icônes dans /config/www…",
-    scanDone: "{sets} jeu(x) d’icônes trouvé(s), {count} icônes. {files} fichiers JS vérifiés, {read} lisibles, {skipped} ignorés{issue}.", countLabel: "{count} icônes",
+    language: "Langue", iconSet: "Jeu d’icônes", search: "Rechercher des icônes", searchPlaceholder: "Nom ou mot-clé", scanMode: "Source du scan", normalSets: "Jeux d’icônes standard", iconifySets: "Custom Icons – jeux Iconify",
+    haPath: "Source / chemin", loadHa: "Charger depuis Home Assistant", importFile: "Importer un fichier",
+    scanHa: "Rechercher des jeux dans Home Assistant", scanning: "Recherche de jeux d’icônes dans /config/www…", scanningIconify: "Chargement des jeux Iconify actifs depuis Custom Icons…",
+    scanDone: "{sets} jeu(x) d’icônes trouvé(s), {count} icônes. {files} fichiers JS et {svgFiles} SVG CLI vérifiés, {read} lisibles, {skipped} ignorés{issue}.", iconifyScanDone: "{sets} jeux Iconify actifs chargés depuis Custom Icons, avec {count} icônes.", iconifyUnavailable: "Custom Icons n’est pas accessible dans cette fenêtre. Ouvrez la bibliothèque depuis Home Assistant et vérifiez que les jeux sont activés dans Custom Icons.", countLabel: "{count} icônes",
     loading: "Chargement du catalogue d’icônes…", loadedMdi: "{count} icônes MDI chargées (version {version}).",
     loadedSet: "{count} icônes chargées depuis {set}.", copied: "{icon} copié.", copyFailed: "Impossible de copier {icon}.",
     imported: "Jeu d’icônes {set} importé avec {count} icônes.", loadFailed: "Impossible de charger le jeu d’icônes : {message}",
@@ -49,6 +49,9 @@ const queryInput = $("#icon-search");
 const notice = $("#notice");
 const setTitle = $("#set-title");
 const countNode = $("#icon-count");
+const scanMode = $("#scan-mode");
+const sourcePathInput = $("#ha-iconset-path");
+const loadHaButton = $("#load-ha-iconset");
 const languageButtons = [...document.querySelectorAll("[data-language]")];
 const STORAGE_KEY = "atlas-icon-library-language";
 const DB_NAME = "atlas-icon-library";
@@ -57,6 +60,7 @@ const DB_STORE = "iconsets";
 const MAX_IMPORT_BYTES = 64 * 1024 * 1024;
 const ROW_HEIGHT = 95;
 const OVERSCAN_ROWS = 2;
+const renderedIconCache = new Map();
 let language = "de";
 let iconSets = new Map();
 let currentIcons = [];
@@ -90,7 +94,12 @@ function setLanguage(next) {
 }
 
 function setLabel(prefix) {
-  return prefix.toLowerCase() === "mdi" ? "MDI" : prefix.toUpperCase();
+  return prefix.toLowerCase() === "mdi" ? "MDI" : prefix.split(/[-_]/).map((part) => part ? `${part[0].toUpperCase()}${part.slice(1)}` : "").join(" ");
+}
+
+function setOptionLabel(set) {
+  const name = set.displayName || set.name || setLabel(set.prefix);
+  return set.source === "iconify" ? `${name} (${set.prefix})` : name;
 }
 
 function openDatabase() {
@@ -131,35 +140,83 @@ async function loadMdiSet() {
   };
 }
 
-async function loadLegacyIconSets() {
-  const legacy = window.customIcons;
-  if (!legacy || typeof legacy !== "object") return [];
-  const found = [];
-  for (const [prefix, adapter] of Object.entries(legacy)) {
-    if (typeof adapter?.getIconList !== "function" || typeof adapter?.getIcon !== "function") continue;
+function getCustomIconAdapters() {
+  for (const scope of [window, window.parent]) {
     try {
-      const listed = normalizeListedIcons(prefix, await adapter.getIconList(), (name) => adapter.getIcon(name));
-      const icons = [];
-      for (const item of listed) {
-        const definition = validateIcon(await item.getIcon());
-        icons.push({ name: item.name, ...definition, keywords: item.keywords });
-      }
-      if (icons.length) found.push({ prefix, icons });
+      if (scope.customIcons && typeof scope.customIcons === "object") return scope.customIcons;
+    } catch { /* Ignore cross-origin parent access. */ }
+  }
+  return null;
+}
+
+async function getCustomIconSetInfo() {
+  for (const scope of [window, window.parent]) {
+    try {
+      const root = scope.document?.querySelector("home-assistant") ?? scope.document?.querySelector("hc-main");
+      const connection = root?.hass?.connection;
+      if (!connection?.sendMessagePromise) continue;
+      const result = await connection.sendMessagePromise({ type: "custom_icons/sets" });
+      if (result && typeof result === "object") return result;
+    } catch { /* Fall back to the adapters exposed by the integration. */ }
+  }
+  return {};
+}
+
+async function scanIconifySets() {
+  setNotice("scanningIconify");
+  const adapters = await getCustomIconAdapters();
+  if (!adapters) throw new Error(t("iconifyUnavailable"));
+  const metadata = await getCustomIconSetInfo();
+  const excluded = new Set(["local", "mdi", "fapro", "far", "fas", "fab"]);
+  const found = [];
+  for (const [prefix, adapter] of Object.entries(adapters)) {
+    if (excluded.has(prefix) || prefix.startsWith("fa6-") || typeof adapter?.getIconList !== "function" || typeof adapter?.getIcon !== "function") continue;
+    try {
+      const info = metadata[prefix];
+      if (info && info.active === false) continue;
+      if (info?.sample_icons?.length && !info.sample_icons.some((icon) => icon.renderer === "iconify")) continue;
+      const listed = normalizeListedIcons(prefix, await adapter.getIconList(), () => null);
+      if (!listed.length) continue;
+      found.push({
+        prefix,
+        displayName: info?.name || setLabel(prefix),
+        source: "iconify",
+        sourcePath: "Custom Icons → Iconify",
+        icons: listed.map(({ name, keywords }) => ({ name, keywords, source: "custom-icons" })),
+      });
     } catch (error) {
-      console.warn(`Could not enumerate custom icon set ${prefix}.`, error);
+      console.warn(`Could not load Iconify set ${prefix}.`, error);
     }
   }
-  return found;
+  if (!found.length) throw new Error(t("iconifyUnavailable"));
+  for (const set of found) iconSets.set(set.prefix, set);
+  updateSetSelector();
+  if (found.some((set) => set.prefix === "ant-design")) select.value = "ant-design";
+  else if (found[0]) select.value = found[0].prefix;
+  changeSelectedSet();
+  const count = found.reduce((total, set) => total + set.icons.length, 0);
+  setNotice("iconifyScanDone", { sets: found.length, count: count.toLocaleString(language) });
 }
 
 function updateSetSelector() {
   const previous = select.value || selectedSet;
   select.replaceChildren();
-  for (const prefix of ["mdi", ...[...iconSets.keys()].filter((key) => key !== "mdi").sort((a, b) => a.localeCompare(b))]) {
-    const option = document.createElement("option");
-    option.value = prefix;
-    option.textContent = setLabel(prefix);
-    select.append(option);
+  const groups = [
+    { label: t("normalSets"), sets: [...iconSets.values()].filter((set) => set.source !== "iconify") },
+    { label: t("iconifySets"), sets: [...iconSets.values()].filter((set) => set.source === "iconify") },
+  ];
+  for (const group of groups) {
+    if (!group.sets.length) continue;
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group.label;
+    group.sets.sort((a, b) => a.prefix.localeCompare(b.prefix));
+    for (const set of group.sets) {
+      const option = document.createElement("option");
+      option.value = set.prefix;
+      option.textContent = setOptionLabel(set);
+      optgroup.append(option);
+    }
+    select.append(optgroup);
   }
   select.value = iconSets.has(previous) ? previous : "mdi";
   selectedSet = select.value;
@@ -170,7 +227,20 @@ function changeSelectedSet() {
   selectedSet = select.value || "mdi";
   const set = iconSets.get(selectedSet);
   currentIcons = set?.icons ?? [];
-  setTitle.textContent = setLabel(selectedSet);
+  setTitle.textContent = setOptionLabel(set || { prefix: selectedSet });
+  if (set?.source === "iconify") {
+    sourcePathInput.value = `/config/custom_icons/iconify-icon-sets-master.zip → json/${selectedSet}.json`;
+    loadHaButton.disabled = true;
+    sourcePathInput.dataset.sourceDisplay = "true";
+  } else if (selectedSet === "cli" && set?.sourcePath) {
+    sourcePathInput.value = set.sourcePath;
+    loadHaButton.disabled = true;
+    sourcePathInput.dataset.sourceDisplay = "true";
+  } else {
+    sourcePathInput.value = set?.sourceFiles?.[0] || "/config/www/atlas-iconset.js";
+    loadHaButton.disabled = false;
+    delete sourcePathInput.dataset.sourceDisplay;
+  }
   queryInput.value = "";
   grid.scrollTop = 0;
   updateFilter();
@@ -184,14 +254,50 @@ function updateFilter() {
   renderGrid();
 }
 
-function makeSvg(icon) {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", icon.viewBox || "0 0 24 24");
-  svg.setAttribute("aria-hidden", "true");
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", icon.path);
-  svg.append(path);
-  return svg;
+function cacheRenderedIcon(key, source) {
+  if (renderedIconCache.size >= 200) renderedIconCache.delete(renderedIconCache.keys().next().value);
+  renderedIconCache.set(key, source);
+}
+
+function iconSvgSource(icon, definition = icon) {
+  const viewBox = Array.isArray(definition.viewBox) ? definition.viewBox.join(" ") : definition.viewBox || icon.viewBox || "0 0 24 24";
+  const content = definition.innerSVG || definition.body;
+  if (typeof content === "string" && content.trim()) {
+    return /^\s*<svg\b/i.test(content) ? content : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${content}</svg>`;
+  }
+  const path = typeof definition.path === "string" ? definition.path : icon.path;
+  if (!path || !/^[MmZzLlHhVvCcSsQqTtAa0-9.,+\-\sEe]+$/.test(path)) return "";
+  const secondPath = typeof definition.secondaryPath === "string" ? definition.secondaryPath : icon.secondaryPath;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}"><path d="${path}"></path>${secondPath ? `<path d="${secondPath}" opacity=".4"></path>` : ""}</svg>`;
+}
+
+function setImageSource(image, source) {
+  if (!source || source.length > 2 * 1024 * 1024) return;
+  const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().replaceAll('"', "") || "#29cdbb";
+  const colored = source.replace(/<svg\b/i, `<svg color="${accent}"`);
+  image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(colored)}`;
+}
+
+async function loadIconVisual(prefix, icon, image) {
+  const cacheKey = icon.sourcePath ? icon.sourcePath : `${prefix}:${icon.name}`;
+  if (renderedIconCache.has(cacheKey)) { setImageSource(image, renderedIconCache.get(cacheKey)); return; }
+  try {
+    let source = "";
+    if (icon.sourcePath) {
+      source = await fileStudioRead(icon.sourcePath);
+    } else if (icon.source === "custom-icons") {
+      const adapter = getCustomIconAdapters()?.[prefix];
+      if (!adapter?.getIcon) return;
+      source = iconSvgSource(icon, await adapter.getIcon(icon.name));
+    } else {
+      source = iconSvgSource(icon);
+    }
+    if (!source) return;
+    cacheRenderedIcon(cacheKey, source);
+    setImageSource(image, source);
+  } catch (error) {
+    console.warn(`Could not render icon ${prefix}:${icon.name}.`, error);
+  }
 }
 
 function renderGrid() {
@@ -211,7 +317,11 @@ function renderGrid() {
     button.setAttribute("role", "listitem");
     button.title = `${selectedSet}:${icon.name}`;
     button.setAttribute("aria-label", `${selectedSet}:${icon.name} — ${language === "fr" ? "copier" : language === "en" ? "copy" : "kopieren"}`);
-    button.append(makeSvg(icon));
+    const image = document.createElement("img");
+    image.alt = "";
+    image.loading = "lazy";
+    button.append(image);
+    void loadIconVisual(selectedSet, icon, image);
     const label = document.createElement("span");
     label.textContent = icon.name;
     button.append(label);
@@ -286,8 +396,10 @@ async function scanHomeAssistantIconSets() {
   setNotice("scanning");
   try {
     const tree = await fileStudioTree("/config/www");
-    const allCandidates = flattenTree(tree).filter(isIconSetCandidate);
+    const allFiles = flattenTree(tree);
+    const allCandidates = allFiles.filter(isIconSetCandidate);
     const candidates = allCandidates.slice(0, 500);
+    const svgFiles = allFiles.filter(isCliSvgCandidate).slice(0, 5000);
     const found = new Map();
     let readable = 0;
     let skippedCount = 0;
@@ -321,16 +433,39 @@ async function scanHomeAssistantIconSets() {
       });
       if (set.icons.length === 0) continue;
       if (iconSets.has(set.prefix) && !window.confirm(t("replaceSet", { set: setLabel(set.prefix) }))) continue;
+      set.source = "normal";
+      set.sourceFiles = [...new Set(set.sourceFiles)];
       await storeIconSet(set);
       iconSets.set(set.prefix, set);
     }
+    if (svgFiles.length) {
+      const cliSet = { prefix: "cli", displayName: "Custom Local Icons", source: "normal", sourcePath: "/config/www/custom_local_icons/", icons: [] };
+      for (const file of svgFiles) {
+        try {
+          const name = cliIconName(file.path);
+          cliSet.icons.push({ name, sourcePath: file.path, keywords: [] });
+        } catch (error) {
+          skippedCount += 1;
+          if (skipped.length < 3) skipped.push(`${file.path}: ${error.message}`);
+        }
+      }
+      if (cliSet.icons.length) {
+        cliSet.icons.sort((a, b) => a.name.localeCompare(b.name));
+        if (!iconSets.has("cli") || window.confirm(t("replaceSet", { set: "CLI" }))) {
+          await storeIconSet(cliSet);
+          iconSets.set("cli", cliSet);
+        }
+      }
+    }
     updateSetSelector();
     const iconCount = [...found.values()].reduce((sum, set) => sum + set.icons.length, 0);
+    const totalCount = iconCount + (iconSets.get("cli")?.icons.length ?? 0);
     const issue = skipped.length ? ` — ${skipped[0]}` : "";
     setNotice("scanDone", {
-      sets: found.size,
-      count: iconCount.toLocaleString(language),
+      sets: found.size + (iconSets.has("cli") ? 1 : 0),
+      count: totalCount.toLocaleString(language),
       files: candidates.length,
+      svgFiles: svgFiles.length,
       read: readable,
       skipped: skippedCount,
       issue,
@@ -338,6 +473,11 @@ async function scanHomeAssistantIconSets() {
   } catch (error) {
     setNotice("loadFailed", { message: error.message }, true);
   }
+}
+
+async function runSelectedScan() {
+  if (scanMode.value === "iconify") return scanIconifySets();
+  return scanHomeAssistantIconSets();
 }
 
 async function importSource(source, { persist = true } = {}) {
@@ -354,7 +494,7 @@ async function importSource(source, { persist = true } = {}) {
 }
 
 async function readFromHomeAssistant() {
-  const path = $("#ha-iconset-path").value.trim();
+  const path = sourcePathInput.value.trim();
   if (!path.startsWith("/config/www/") || path.includes("..")) {
     setNotice("loadFailed", { message: "The file must be inside /config/www." }, true);
     return;
@@ -373,10 +513,16 @@ languageButtons.forEach((button) => button.addEventListener("click", () => {
   updateFilter();
 }));
 select.addEventListener("change", changeSelectedSet);
+sourcePathInput.addEventListener("input", () => {
+  if (sourcePathInput.dataset.sourceDisplay) {
+    delete sourcePathInput.dataset.sourceDisplay;
+    loadHaButton.disabled = false;
+  }
+});
 queryInput.addEventListener("input", updateFilter);
 grid.addEventListener("scroll", renderGrid, { passive: true });
 $("#load-ha-iconset").addEventListener("click", () => { void readFromHomeAssistant(); });
-$("#scan-ha-iconsets").addEventListener("click", () => { void scanHomeAssistantIconSets(); });
+$("#scan-ha-iconsets").addEventListener("click", () => { void runSelectedScan().catch((error) => setNotice("loadFailed", { message: error.message }, true)); });
 $("#import-iconset").addEventListener("change", (event) => {
   const file = event.target.files?.[0];
   event.target.value = "";
@@ -398,11 +544,8 @@ void (async () => {
     const savedSets = await storedIconSets().catch(() => []);
     for (const set of savedSets) {
       try {
-        if (set?.prefix && Array.isArray(set.icons)) iconSets.set(set.prefix, { ...set, icons: set.icons.map((icon) => ({ ...icon, ...validateIcon(icon) })) });
+        if (set?.prefix && Array.isArray(set.icons)) iconSets.set(set.prefix, { ...set, icons: set.icons.map((icon) => icon.sourcePath ? icon : ({ ...icon, ...validateIcon(icon) })) });
       } catch { /* Ignore invalid or outdated browser records. */ }
-    }
-    for (const set of await loadLegacyIconSets()) {
-      if (!iconSets.has(set.prefix)) iconSets.set(set.prefix, set);
     }
     updateSetSelector();
     setNotice("loadedMdi", { count: mdi.icons.length.toLocaleString(language), version: mdi.version });

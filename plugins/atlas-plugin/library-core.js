@@ -1,4 +1,5 @@
 const ICON_NAME = /^[a-z0-9]+(?:[-_][a-z0-9]+)*$/;
+const LOCAL_ICON_NAME = /^[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*$/;
 const SVG_PATH = /^[MmZzLlHhVvCcSsQqTtAa0-9.,+\-\sEe]+$/;
 const MAX_STATIC_ICON_COUNT = 50000;
 
@@ -7,6 +8,23 @@ export function isIconSetCandidate(file) {
   const pathParts = String(file.path ?? file.name ?? "").split(/[\\/]+/);
   const directoryParts = pathParts.slice(0, -1);
   return /icon/i.test(file.name ?? "") || directoryParts.some((part) => /icon/i.test(part));
+}
+
+export function isCliSvgCandidate(file) {
+  if (file?.extension !== "svg" || !Number.isFinite(file.size) || file.size > 5 * 1024 * 1024) return false;
+  const path = String(file.path ?? "").replaceAll("\\", "/");
+  return /^\/config\/www\/custom_local_icons\/.+\.svg$/i.test(path);
+}
+
+export function cliIconName(filePath) {
+  const normalized = String(filePath ?? "").replaceAll("\\", "/");
+  const prefix = "/config/www/custom_local_icons/";
+  if (!normalized.toLowerCase().startsWith(prefix)) throw new TypeError("SVG file is outside the Custom Local Icons folder.");
+  const name = normalized.slice(prefix.length).replace(/\.svg$/i, "");
+  if (!LOCAL_ICON_NAME.test(name) || name.split("/").some((part) => part === "." || part === "..")) {
+    throw new TypeError("SVG filename is not a valid Custom Local Icons name.");
+  }
+  return name;
 }
 
 export function validateIcon(icon) {
