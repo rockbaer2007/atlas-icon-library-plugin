@@ -4,7 +4,7 @@ const dictionaries = {
   de: {
     eyebrow: "ATLAS PLUGIN", title: "ATLAS Icon Bibliothek", intro: "Durchsuche Iconsets und kopiere Icons für Home Assistant.",
     language: "Sprache", iconSet: "Iconset", search: "Icons suchen", searchPlaceholder: "Name oder Stichwort", scanMode: "Scanbereich", normalSets: "Normale Iconsets", iconifySets: "Custom Icons – Iconify-Sets",
-    haPath: "Quelle / Pfad", loadHa: "Aus Home Assistant laden", importFile: "Datei importieren",
+    haPath: "Quelle / Pfad", bundledMdi: "Integrierter MDI-Katalog", loadHa: "Aus Home Assistant laden", importFile: "Datei importieren",
     scanHa: "Iconsets in Home Assistant finden", scanning: "Suche nach Iconsets in /config/www …", scanningIconify: "Lade aktive Iconify-Sets aus Custom Icons …",
     scanDone: "{sets} Iconset(s) mit insgesamt {count} Icons gefunden. {files} JS-Dateien und {svgFiles} CLI-SVGs geprüft, {read} lesbar, {skipped} übersprungen{issue}.", iconifyScanDone: "{sets} aktive Iconify-Sets mit insgesamt {count} Icons aus Custom Icons geladen.", iconifyUnavailable: "Custom Icons ist in diesem Fenster nicht erreichbar. Öffne die Bibliothek über Home Assistant und prüfe, ob die Sets in Custom Icons aktiviert sind.", countLabel: "{count} Icons",
     loading: "Iconkatalog wird geladen …", loadedMdi: "{count} MDI-Icons geladen (Version {version}).",
@@ -17,7 +17,7 @@ const dictionaries = {
   en: {
     eyebrow: "ATLAS PLUGIN", title: "ATLAS Icon Library", intro: "Browse icon sets and copy icons for Home Assistant.",
     language: "Language", iconSet: "Icon set", search: "Search icons", searchPlaceholder: "Name or keyword", scanMode: "Scan source", normalSets: "Standard icon sets", iconifySets: "Custom Icons – Iconify sets",
-    haPath: "Source / path", loadHa: "Load from Home Assistant", importFile: "Import file",
+    haPath: "Source / path", bundledMdi: "Bundled MDI catalog", loadHa: "Load from Home Assistant", importFile: "Import file",
     scanHa: "Find icon sets in Home Assistant", scanning: "Searching /config/www for icon sets…", scanningIconify: "Loading active Iconify sets from Custom Icons…",
     scanDone: "Found {sets} icon set(s) with {count} icons. Checked {files} JS files and {svgFiles} CLI SVGs, read {read}, skipped {skipped}{issue}.", iconifyScanDone: "Loaded {sets} active Iconify sets with {count} icons from Custom Icons.", iconifyUnavailable: "Custom Icons is not available in this window. Open the library through Home Assistant and check that the sets are enabled in Custom Icons.", countLabel: "{count} icons",
     loading: "Loading icon catalog…", loadedMdi: "Loaded {count} MDI icons (version {version}).",
@@ -30,7 +30,7 @@ const dictionaries = {
   fr: {
     eyebrow: "PLUGIN ATLAS", title: "Bibliothèque d’icônes ATLAS", intro: "Parcourez les jeux d’icônes et copiez des icônes pour Home Assistant.",
     language: "Langue", iconSet: "Jeu d’icônes", search: "Rechercher des icônes", searchPlaceholder: "Nom ou mot-clé", scanMode: "Source du scan", normalSets: "Jeux d’icônes standard", iconifySets: "Custom Icons – jeux Iconify",
-    haPath: "Source / chemin", loadHa: "Charger depuis Home Assistant", importFile: "Importer un fichier",
+    haPath: "Source / chemin", bundledMdi: "Catalogue MDI intégré", loadHa: "Charger depuis Home Assistant", importFile: "Importer un fichier",
     scanHa: "Rechercher des jeux dans Home Assistant", scanning: "Recherche de jeux d’icônes dans /config/www…", scanningIconify: "Chargement des jeux Iconify actifs depuis Custom Icons…",
     scanDone: "{sets} jeu(x) d’icônes trouvé(s), {count} icônes. {files} fichiers JS et {svgFiles} SVG CLI vérifiés, {read} lisibles, {skipped} ignorés{issue}.", iconifyScanDone: "{sets} jeux Iconify actifs chargés depuis Custom Icons, avec {count} icônes.", iconifyUnavailable: "Custom Icons n’est pas accessible dans cette fenêtre. Ouvrez la bibliothèque depuis Home Assistant et vérifiez que les jeux sont activés dans Custom Icons.", countLabel: "{count} icônes",
     loading: "Chargement du catalogue d’icônes…", loadedMdi: "{count} icônes MDI chargées (version {version}).",
@@ -91,6 +91,7 @@ function setLanguage(next) {
     element.setAttribute("aria-label", t(element.dataset.i18nAria));
   });
   languageButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.language === language)));
+  if (iconSets.has(selectedSet)) changeSelectedSet();
 }
 
 function setLabel(prefix) {
@@ -228,16 +229,24 @@ function changeSelectedSet() {
   const set = iconSets.get(selectedSet);
   currentIcons = set?.icons ?? [];
   setTitle.textContent = setOptionLabel(set || { prefix: selectedSet });
-  if (set?.source === "iconify") {
+  if (selectedSet === "mdi") {
+    sourcePathInput.value = t("bundledMdi");
+    sourcePathInput.readOnly = true;
+    loadHaButton.disabled = true;
+    sourcePathInput.dataset.sourceDisplay = "true";
+  } else if (set?.source === "iconify") {
     sourcePathInput.value = `/config/custom_icons/iconify-icon-sets-master.zip → json/${selectedSet}.json`;
+    sourcePathInput.readOnly = true;
     loadHaButton.disabled = true;
     sourcePathInput.dataset.sourceDisplay = "true";
   } else if (selectedSet === "cli" && set?.sourcePath) {
     sourcePathInput.value = set.sourcePath;
+    sourcePathInput.readOnly = true;
     loadHaButton.disabled = true;
     sourcePathInput.dataset.sourceDisplay = "true";
   } else {
     sourcePathInput.value = set?.sourceFiles?.[0] || "/config/www/atlas-iconset.js";
+    sourcePathInput.readOnly = false;
     loadHaButton.disabled = false;
     delete sourcePathInput.dataset.sourceDisplay;
   }
@@ -520,6 +529,7 @@ select.addEventListener("change", changeSelectedSet);
 sourcePathInput.addEventListener("input", () => {
   if (sourcePathInput.dataset.sourceDisplay) {
     delete sourcePathInput.dataset.sourceDisplay;
+    sourcePathInput.readOnly = false;
     loadHaButton.disabled = false;
   }
 });
