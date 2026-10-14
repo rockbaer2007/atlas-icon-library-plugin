@@ -2,6 +2,8 @@
 
 ## Deutsch
 
+Seit 0.1.9 werden Größenänderungen des Iconrasters im nächsten Bildaufbau zusammengefasst. Dies verhindert die beobachtete ResizeObserver-Rückkopplung in WebKit. Die teilweise fehlende Darstellung in einer Safari-16.6-Ventura-VM ist noch nicht als behoben bestätigt.
+
 Eigenständiges ATLAS-Plugin zum Durchsuchen von Home-Assistant-Iconsets. Die Oberfläche bietet Setauswahl, Suche und ein responsives Raster mit bis zu 20 Spalten. Große Listen werden virtualisiert. Beim Anklicken eines Eintrags wird der vollständige Iconname wie `mdi:home` oder `atlas:home` in die Zwischenablage kopiert.
 
 - **MDI:** 7.447 Icons aus Material Design Icons 7.4.47; Katalog und Lizenzangaben sind im Plugin enthalten.
@@ -17,6 +19,8 @@ Home Assistant bietet für die moderne `window.customIconsets`-Schnittstelle kei
 
 ## English
 
+Since 0.1.9, icon grid size changes are coalesced in the next animation frame. This prevents the observed ResizeObserver feedback in WebKit. Partial rendering in a Safari 16.6 Ventura VM has not yet been confirmed fixed.
+
 Standalone ATLAS plugin for browsing Home Assistant icon sets. The interface provides set selection, search and a responsive grid with up to 20 columns. Large lists are virtualized. Clicking an item copies its fully qualified name, such as `mdi:home` or `atlas:home`, to the clipboard.
 
 - **MDI:** 7,447 icons from Material Design Icons 7.4.47; the catalog and license information are bundled.
@@ -31,6 +35,8 @@ Standalone ATLAS plugin for browsing Home Assistant icon sets. The interface pro
 Home Assistant's modern `window.customIconsets` interface has no general method for listing every icon name in a set. Such sets can only be displayed when they also provide a name list or are imported as a supported static Icon Studio file. The plugin does not execute third-party JavaScript. File Studio must allow `/config/www` for direct file access. Imported sets are stored locally in browser IndexedDB; no Home Assistant token is required.
 
 ## Français
+
+Depuis la version 0.1.9, les changements de taille de la grille sont regroupés dans la prochaine trame d’animation. Cela évite la rétroaction ResizeObserver observée dans WebKit. L’affichage incomplet dans une VM Ventura avec Safari 16.6 n’est pas encore confirmé comme corrigé.
 
 Plugin ATLAS indépendant pour parcourir les jeux d’icônes Home Assistant. L’interface propose la sélection du jeu, la recherche et une grille adaptative pouvant afficher jusqu’à 20 colonnes. Les grandes listes sont virtualisées. Un clic copie l’identifiant complet, par exemple `mdi:home` ou `atlas:home`, dans le presse-papiers.
 

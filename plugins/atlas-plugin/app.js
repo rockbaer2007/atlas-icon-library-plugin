@@ -546,7 +546,23 @@ $("#import-iconset").addEventListener("change", (event) => {
     setNotice(error instanceof TypeError ? "invalidFile" : "loadFailed", { message: error.message }, true);
   });
 });
-new ResizeObserver(renderGrid).observe(grid);
+let gridResizeFrame = 0;
+let observedGridWidth = -1;
+let observedGridHeight = -1;
+new ResizeObserver(() => {
+  const width = grid.clientWidth;
+  const height = grid.clientHeight;
+  if (width === observedGridWidth && height === observedGridHeight) return;
+  observedGridWidth = width;
+  observedGridHeight = height;
+  // Rebuilding inside ResizeObserver can change its own observed box in WebKit.
+  // Coalesce size changes and write the next frame, outside observer delivery.
+  if (gridResizeFrame) return;
+  gridResizeFrame = requestAnimationFrame(() => {
+    gridResizeFrame = 0;
+    renderGrid();
+  });
+}).observe(grid);
 
 const savedLanguage = (() => { try { return localStorage.getItem(STORAGE_KEY); } catch { return null; } })();
 setLanguage(dictionaries[savedLanguage] ? savedLanguage : "de");
